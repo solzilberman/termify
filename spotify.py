@@ -1,10 +1,16 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import json
 
 class Spotify:
     def __init__(self):
-        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="",
-                                               client_secret="",
+        with open('secret.json') as data_file:
+            data = json.load(data_file)
+        id = data['id']
+        secret = data['secret']
+
+        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=id,
+                                               client_secret=secret,
                                                redirect_uri="http://localhost:3000/",
                                                scope="user-library-read user-modify-playback-state app-remote-control streaming user-read-playback-state"))
     def savedTracks(self):
